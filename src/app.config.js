@@ -8,9 +8,9 @@ const appConfig = {
   store: {
     name: "Kitchen Co.",
     tagline: "Fresh • Fast • Delicious",
-    currencyCode: "USD",
-    currencySymbol: "$",
-    locale: "en-US",
+    currencyCode: "CAD",
+    currencySymbol: "CA$",
+    locale: "en-CA",
   },
 
   // Theme tokens - changing these will update the entire UI

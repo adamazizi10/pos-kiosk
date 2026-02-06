@@ -16,9 +16,9 @@ const getMode = (key, defaultValue = "MOCK") =>
 // export const isMockPaymentCardReader = getMode("VITE_CARD_READER_MODE") !== "HARDWARE";
 // export const isMockCashDrawer = getMode("VITE_CASH_DRAWER_MODE") !== "HARDWARE";
 
-export const isMockPrinter = true
-export const isMockPaymentCardReader = true
-export const isMockCashDrawer = true
+export const isMockPrinter = false
+export const isMockPaymentCardReader = false
+export const isMockCashDrawer = false
 
 export default {
   isMockPrinter,
