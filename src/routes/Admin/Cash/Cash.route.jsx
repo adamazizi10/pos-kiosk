@@ -1,18 +1,20 @@
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { label: "Profiles", path: "/admin/users/profiles" },
-  { label: "User Sessions", path: "/admin/users/userSessions" },
+  { label: "Cash Drawer", path: "/admin/cash/cashDrawer" },
+  { label: "Cash Drawer Events", path: "/admin/cash/cashDrawerEvents" },
 ];
 
-const UsersRoute = () => {
+const CashRoute = () => {
+  const location = useLocation();
+
   return (
     <div className="flex h-full flex-col">
       {/* Top Navigation Bar */}
       <div className="border-b border-border bg-card">
         <div className="px-6 py-4">
-          <h1 className="text-2xl font-semibold text-foreground mb-4">User Management</h1>
+          <h1 className="text-2xl font-semibold text-foreground mb-4">Cash Management</h1>
           <nav className="flex gap-1">
             {navItems.map((item) => (
               <NavLink
@@ -42,4 +44,4 @@ const UsersRoute = () => {
   );
 };
 
-export default UsersRoute;
+export default CashRoute;

@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const TransactionsFiltersBar = ({ onSearchChange, onStatusChange, onSourceChange, onDateChange }) => {
+const UserSessionsFiltersBar = ({ onSearchChange, onDateChange, onStatusChange }) => {
   return (
     <div className="flex flex-wrap items-center gap-3">
       <Select defaultValue="all" onValueChange={onDateChange}>
@@ -25,32 +25,18 @@ const TransactionsFiltersBar = ({ onSearchChange, onStatusChange, onSourceChange
 
       <Select defaultValue="all-status" onValueChange={onStatusChange}>
         <SelectTrigger className="w-[160px]">
-          <SelectValue placeholder="Status" />
+          <SelectValue placeholder="Session Status" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all-status">All Status</SelectItem>
-          <SelectItem value="CREATED">Created</SelectItem>
-          <SelectItem value="PAID">Paid</SelectItem>
-          <SelectItem value="REFUNDED">Refunded</SelectItem>
-          <SelectItem value="VOIDED">Voided</SelectItem>
-        </SelectContent>
-      </Select>
-
-      <Select defaultValue="all-source" onValueChange={onSourceChange}>
-        <SelectTrigger className="w-[160px]">
-          <SelectValue placeholder="Source" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all-source">All Sources</SelectItem>
-          <SelectItem value="POS">POS</SelectItem>
-          <SelectItem value="KIOSK">Kiosk</SelectItem>
-          <SelectItem value="ONLINE">Online</SelectItem>
+          <SelectItem value="all-status">All Sessions</SelectItem>
+          <SelectItem value="active">Active</SelectItem>
+          <SelectItem value="ended">Ended</SelectItem>
         </SelectContent>
       </Select>
 
       <Input
         type="text"
-        placeholder="Search orders..."
+        placeholder="Search by user..."
         className="w-[240px]"
         onChange={(e) => onSearchChange?.(e.target.value)}
       />
@@ -58,4 +44,4 @@ const TransactionsFiltersBar = ({ onSearchChange, onStatusChange, onSourceChange
   );
 };
 
-export default TransactionsFiltersBar;
+export default UserSessionsFiltersBar;

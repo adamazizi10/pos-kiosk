@@ -25,7 +25,7 @@ const UsersTable = ({
   const hasUsers = users && users.length > 0;
 
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden mx-8 my-6">
+    <div className="rounded-md border border-border bg-card overflow-hidden">
       <div className="overflow-auto">
         <table className="w-full">
           <thead className="bg-muted/50 border-b border-border">

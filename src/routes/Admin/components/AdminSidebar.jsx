@@ -6,6 +6,7 @@ import { useAuth } from "@/auth/AuthProvider";
 const navItems = [
   { label: "Dashboard", path: "/admin" },
   { label: "Transactions", path: "/admin/transactions" },
+  { label: "Cash", path: "/admin/cash" },
   { label: "Menu", path: "/admin/menu" },
   { label: "Users", path: "/admin/users" },
   { label: "Devices", path: "/admin/devices" },

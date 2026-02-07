@@ -1,54 +1,101 @@
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-const statusStyles = {
-  Completed: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
-  Refunded: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
-  Voided: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
-};
+const TransactionsTable = ({ rows, selectedId, onSelectRow, isLoading }) => {
+  const formatCurrency = (cents) => {
+    return `$${(cents / 100).toFixed(2)}`;
+  };
 
-const TransactionsTable = ({ rows, selectedId, onSelectRow }) => {
+  const formatDateTime = (dateString) => {
+    if (!dateString) return "—";
+    return new Date(dateString).toLocaleString();
+  };
+
+  const getStatusBadgeVariant = (status) => {
+    switch (status) {
+      case "PAID":
+        return "default";
+      case "CREATED":
+        return "secondary";
+      case "REFUNDED":
+      case "VOIDED":
+        return "outline";
+      default:
+        return "secondary";
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="rounded-md border border-border bg-card">
+        <div className="flex items-center justify-center py-12">
+          <p className="text-muted-foreground">Loading orders...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="overflow-auto rounded-md border border-border">
-      <table className="w-full text-sm">
-        <thead className="bg-muted/50 sticky top-0">
-          <tr className="border-b border-border">
-            <th className="px-3 py-2 text-left font-medium text-muted-foreground">Time</th>
-            <th className="px-3 py-2 text-left font-medium text-muted-foreground">Transaction #</th>
-            <th className="px-3 py-2 text-left font-medium text-muted-foreground">Order #</th>
-            <th className="px-3 py-2 text-left font-medium text-muted-foreground">Channel</th>
-            <th className="px-3 py-2 text-left font-medium text-muted-foreground">Customer</th>
-            <th className="px-3 py-2 text-left font-medium text-muted-foreground">Payment</th>
-            <th className="px-3 py-2 text-right font-medium text-muted-foreground">Total</th>
-            <th className="px-3 py-2 text-left font-medium text-muted-foreground">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr
-              key={row.id}
-              onClick={() => onSelectRow(row)}
-              className={cn(
-                "border-b border-border cursor-pointer transition-colors hover:bg-muted/50",
-                selectedId === row.id && "bg-muted"
-              )}
-            >
-              <td className="px-3 py-2 text-foreground">{row.time}</td>
-              <td className="px-3 py-2 font-mono text-foreground">{row.transactionNumber}</td>
-              <td className="px-3 py-2 font-mono text-foreground">{row.orderNumber}</td>
-              <td className="px-3 py-2 text-foreground">{row.channel}</td>
-              <td className="px-3 py-2 text-foreground">{row.customer}</td>
-              <td className="px-3 py-2 text-foreground">{row.paymentMethod}</td>
-              <td className="px-3 py-2 text-right font-medium text-foreground">{row.total}</td>
-              <td className="px-3 py-2">
-                <Badge className={cn("text-xs", statusStyles[row.status])}>
-                  {row.status}
-                </Badge>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="rounded-md border border-border bg-card overflow-hidden">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Order #</TableHead>
+            <TableHead>Date & Time</TableHead>
+            <TableHead>Customer</TableHead>
+            <TableHead>Source</TableHead>
+            <TableHead>Dining</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead className="text-right">Total</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
+                No orders found
+              </TableCell>
+            </TableRow>
+          ) : (
+            rows.map((row) => (
+              <TableRow
+                key={row.id}
+                className={cn(
+                  "cursor-pointer transition-colors",
+                  selectedId === row.id && "bg-muted"
+                )}
+                onClick={() => onSelectRow(row)}
+              >
+                <TableCell className="font-medium">#{row.order_number}</TableCell>
+                <TableCell className="text-muted-foreground">
+                  {formatDateTime(row.created_at)}
+                </TableCell>
+                <TableCell>{row.customer_name || "—"}</TableCell>
+                <TableCell>
+                  <Badge variant="outline">{row.source}</Badge>
+                </TableCell>
+                <TableCell className="text-muted-foreground">
+                  {row.dining_option?.replace("_", " ")}
+                </TableCell>
+                <TableCell>
+                  <Badge variant={getStatusBadgeVariant(row.status)}>{row.status}</Badge>
+                </TableCell>
+                <TableCell className="text-right font-mono">
+                  {formatCurrency(row.total_cents)}
+                </TableCell>
+              </TableRow>
+            ))
+          )}
+        </TableBody>
+      </Table>
     </div>
   );
 };

@@ -8,6 +8,7 @@ import {
   RouterProvider,
   Route,
   createRoutesFromElements,
+  Navigate,
 } from "react-router-dom";
 
 import Index from "./pages/Index";
@@ -44,8 +45,13 @@ import AdminRoute from "./routes/Admin/Admin.route.jsx";
 import AdminDashboardRoute from "./routes/Admin/Dashboard/Dashboard.route.jsx";
 import AdminLoginRoute from "./routes/Admin/Login/Login.route";
 import AdminTransactionsRoute from "./routes/Admin/Transactions/Transactions.route.jsx";
+import AdminCashRoute from "./routes/Admin/Cash/Cash.route.jsx";
+import AdminCashDrawerRoute from "./routes/Admin/Cash/CashDrawer/CashDrawer.route.jsx";
+import AdminCashDrawerEventsRoute from "./routes/Admin/Cash/CashDrawerEvents/CashDrawerEvents.route.jsx";
 import AdminMenuRoute from "./routes/Admin/Menu/Menu.route.jsx";
 import AdminUsersRoute from "./routes/Admin/Users/Users.route.jsx";
+import AdminProfilesRoute from "./routes/Admin/Users/Profiles/Profiles.route.jsx";
+import AdminUserSessionsRoute from "./routes/Admin/Users/UserSessions/UserSessions.route.jsx";
 import AdminSettingsRoute from "./routes/Admin/Settings/Settings.route.jsx";
 import AdminDevicesRoute from "./routes/Admin/Devices/Devices.route.jsx";
 
@@ -88,8 +94,17 @@ const router = createBrowserRouter(
         <Route path="/admin" element={<AdminRoute />}>
           <Route index element={<AdminDashboardRoute />} />
           <Route path="transactions" element={<AdminTransactionsRoute />} />
+          <Route path="cash" element={<AdminCashRoute />}>
+            <Route index element={<Navigate to="/admin/cash/cashDrawer" replace />} />
+            <Route path="cashDrawer" element={<AdminCashDrawerRoute />} />
+            <Route path="cashDrawerEvents" element={<AdminCashDrawerEventsRoute />} />
+          </Route>
           <Route path="menu" element={<AdminMenuRoute />} />
-          <Route path="users" element={<AdminUsersRoute />} />
+          <Route path="users" element={<AdminUsersRoute />}>
+            <Route index element={<Navigate to="/admin/users/profiles" replace />} />
+            <Route path="profiles" element={<AdminProfilesRoute />} />
+            <Route path="userSessions" element={<AdminUserSessionsRoute />} />
+          </Route>
           <Route path="devices" element={<AdminDevicesRoute />} />
           <Route path="settings" element={<AdminSettingsRoute />} />
         </Route>
